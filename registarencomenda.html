@@ -1,0 +1,54 @@
+<html >
+<head>
+  <title>Registo da Encomenda</title>
+  <link rel="stylesheet" href="css1.css">
+</head>
+<body>
+  <div class="container">
+    <div class="left-panel">
+        <a href="mainpage.html"><img src="czlogo.jpg" alt="Logotipo" class="logo"></a>
+      <h2>Bem-vindo de volta!</h2>
+      <p style="font-family: 'Courier New', Courier, monospace;">Life is better When You Personalize it!</p>
+      <a href="termos_e_condicoes.html" class="link">VER TERMOS E CONDI&Ccedil;&Ocirc;ES</a>
+      <a href="registarpacote.html"><button class="btn"> IR PARA TELA DE REGISTAR PACOTE</button></a>
+      <a href="#" class="link">Esqueceu sua senha?</a>
+    </div>
+    <div class="right-panel">
+      <h2>Fa&ccedil;a o Registo da Encomenda</h2>
+      <form>
+        <div class="input-group">
+            <input type="number" id="orderId" placeholder="Insira o ID da Encomenda" readonly>
+          </div>
+        <div class="input-group">
+          <input type="text" placeholder="Insira o Nome do Cliente" required>
+        </div>
+        <div class="input-group">
+          <input type="text" placeholder="Insira o Pacote Encomendado" required>
+        </div>
+        <div class="input-group">
+          <input type="number" placeholder="Insira o Contacto do Cliente" required>
+        </div>
+        <div class="input-group">
+            <input type="number" id="packageCost" placeholder="Insira o Custo do Pacote"  required>
+          </div>
+          <div class="input-group">
+            <input type="number" id="advanceValue" placeholder="Insira o Valor Antecedente" required>
+          </div>
+          <div class="input-group">
+            <input type="number" id="remainingValue" placeholder="Insira o Valor Remanescente" readonly>
+          </div>
+          <div class="input-group">
+            <label for="date">Insira Data Para ser Entregue</label>
+            <input type="date"  required>
+          </div>
+          <div class="input-group">
+            <input type="text" placeholder="Insira a Cor" required>
+          </div>
+        <button type="submit" class="btn">Registar Encomenda</button>
+        <a href="mainpage.html"><button class="btn">Fechar</button></a>
+      </form>
+    </div>
+  </div>
+  <script src="javaa.js.js"></script>
+</body>
+</html>
