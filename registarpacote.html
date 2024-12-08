@@ -1,7 +1,57 @@
 <html >
 <head>
   <title>Registar Pacote</title>
-  <script src="javaa.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+    // Configuração do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCC2ONhTOSOCtIDuCnmtJJ3olNS7seF-CA",
+      authDomain: "projecto-cz-gifts.firebaseapp.com",
+      databaseURL: "https://projecto-cz-gifts-default-rtdb.firebaseio.com",
+      projectId: "projecto-cz-gifts",
+      storageBucket: "projecto-cz-gifts.firebasestorage.app",
+      messagingSenderId: "368872869191",
+      appId: "1:368872869191:web:04da4ff543360d3a8bd062",
+    };
+
+    // Inicialize o Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const pacoteRef = ref(database, "pacotes");
+
+    // Manipule o envio do formulário
+    document.getElementById("registarpacoteform").addEventListener("submit", (e) => {
+      e.preventDefault(); // Evitar comportamento padrão de envio
+
+      // Capturar valores dos campos
+      const packageName = document.getElementById("packageName").value;
+      const packageCost = parseFloat(document.getElementById("packageCost").value);
+      const packageSize = document.getElementById("packageSize").value;
+      const packageColor = document.getElementById("packageColor").value;
+
+      // Crie o objeto de dados do pacote
+      const pacoteData = {
+        packageName,
+        packageCost,
+        packageSize: packageSize || "N/A", // Valor padrão se não preenchido
+        packageColor: packageColor || "N/A", // Valor padrão se não preenchido
+      };
+
+      // Enviar dados para o Firebase
+      push(pacoteRef, pacoteData)
+        .then(() => {
+          alert("Pacote registado com sucesso!");
+          document.getElementById("registarpacoteform").reset(); // Limpar o formulário
+        })
+        .catch((error) => {
+          console.error("Erro ao registar o pacote:", error);
+          alert("Erro ao registar o pacote. Tente novamente.");
+        });
+    });
+
+  </script>
   <link rel="stylesheet" href="css1.css">
 </head>
 <body>
@@ -16,19 +66,18 @@
     </div>
     <div class="right-panel">
       <h2>Fa&ccedil;a o Registo do Pacote</h2>
-      <form>
+      <form id="registarpacoteform">
         <div class="input-group">
-          <input type="text" placeholder="Insira o Nome do Pacote" required>
+          <input id="packageName" type="text" placeholder="Insira o Nome do Pacote" required>
         </div>
         <div class="input-group">
-          <input type="number" placeholder="Insira o Pre&ccedil;o do Pacote" required>
+          <input id="packageCost" type="number" placeholder="Insira o Preço do Pacote" required>
         </div>
         <div class="input-group">
-          <input type="text" placeholder="Insira o Tamanho" >
+          <input id="packageSize" type="text" placeholder="Insira o Tamanho">
         </div>
         <div class="input-group">
-            <input type="text" placeholder="Insira a cor" >
-          </div>
+          <input id="packageColor" type="text" placeholder="Insira a cor">
         <button type="submit" class="btn">Registar Pacote</button>
         <a href="mainpage.html"><button class="btn">Fechar</button></a>
       </form>

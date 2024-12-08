@@ -1,7 +1,63 @@
-<html >
+<html>
 <head>
   <title>Registo da Encomenda</title>
-  <script src="javaa.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+  
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCC2ONhTOSOCtIDuCnmtJJ3olNS7seF-CA",
+      authDomain: "projecto-cz-gifts.firebaseapp.com",
+      databaseURL: "https://projecto-cz-gifts-default-rtdb.firebaseio.com",
+      projectId: "projecto-cz-gifts",
+      storageBucket: "projecto-cz-gifts.firebasestorage.app",
+      messagingSenderId: "368872869191",
+      appId: "1:368872869191:web:04da4ff543360d3a8bd062",
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const encomendaRef = ref(database, "registarEncomenda");
+  
+    document
+      .getElementById("registarencomendaform")
+      .addEventListener("submit", (e) => {
+        e.preventDefault();
+  
+        const clientName = document.getElementById("clientName").value;
+        const packageName = document.getElementById("packageName").value;
+        const clientContact = document.getElementById("clientContact").value;
+        const packageCost = parseFloat(
+          document.getElementById("packageCost").value
+        );
+        const advanceValue = parseFloat(
+          document.getElementById("advanceValue").value
+        );
+        const remainingValue = packageCost - advanceValue;
+  
+        const encomendaData = {
+          clientName,
+          packageName,
+          clientContact,
+          packageCost,
+          advanceValue,
+          remainingValue,
+        };
+  
+        push(encomendaRef, encomendaData)
+          .then(() => {
+            alert("Encomenda registada com sucesso!");
+            document.getElementById("registarencomendaform").reset();
+            console.log("Encomenda saved successfully");
+          })
+          .catch((error) => {
+            alert("Erro ao salvar a encomenda");
+            console.error("Error saving encomenda:", error);
+          });
+      });
+  </script>
   <link rel="stylesheet" href="css1.css">
 </head>
 <body>
@@ -16,27 +72,27 @@
     </div>
     <div class="right-panel">
       <h2>Fa&ccedil;a o Registo da Encomenda</h2>
-      <form>
+      <form id="registarencomendaform">
         <div class="input-group">
-            <input type="number" id="orderId" placeholder="Insira o ID da Encomenda" readonly>
+            <input type="number" id="orderId" name="orderId" placeholder="Insira o ID da Encomenda" readonly>
           </div>
         <div class="input-group">
-          <input type="text" placeholder="Insira o Nome do Cliente" required>
+          <input type="text" id="clientName" name="clientName" placeholder="Insira o Nome do Cliente" required>
         </div>
         <div class="input-group">
-          <input type="text" placeholder="Insira o Pacote Encomendado" required>
+          <input type="text" id="packageName" name="packageName" placeholder="Insira o Pacote Encomendado" required>
         </div>
         <div class="input-group">
-          <input type="number" placeholder="Insira o Contacto do Cliente" required>
+          <input type="number" id="clientContact" name="clientContact" placeholder="Insira o Contacto do Cliente" required>
         </div>
         <div class="input-group">
-            <input type="number" id="packageCost" placeholder="Insira o Custo do Pacote"  required>
-          </div>
-          <div class="input-group">
-            <input type="number" id="advanceValue" placeholder="Insira o Valor Antecedente" required>
+            <input type="number" id="packageCost" name="packageCost" placeholder="Insira o Custo do Pacote"  required>
           </div>
           <div class="input-group">
-            <input type="number" id="remainingValue" placeholder="Insira o Valor Remanescente" readonly>
+            <input type="number" id="advanceValue" name="advanceValue" placeholder="Insira o Valor Antecedente" required>
+          </div>
+          <div class="input-group">
+            <input type="number" id="remainingValue" name="remainingValue" placeholder="Insira o Valor Remanescente" readonly>
           </div>
           <div class="input-group">
             <label for="date">Insira Data Para ser Entregue</label>
@@ -50,6 +106,5 @@
       </form>
     </div>
   </div>
-  <script src="javaa.js.js"></script>
 </body>
 </html>
